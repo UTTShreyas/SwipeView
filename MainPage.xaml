@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="http://xamarin.com/schemas/2020/toolkit" 
+             x:Class="SwipeViewSample.MainPage"
+             x:Name="page">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="SampleTemplate">
+            <StackLayout BackgroundColor="Transparent" Padding="0,0,0,10" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+                <SwipeView>
+                    <SwipeView.RightItems>
+                        <SwipeItems>
+                            <SwipeItemView>
+                                <Grid WidthRequest="320" BackgroundColor="Wheat">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                        <ColumnDefinition Width="25*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <ImageButton Grid.Column="0" Source="delete.png" BackgroundColor="White" Command="{Binding BindingContext.Button1Command, Source={x:Reference page}}" CommandParameter="{Binding .}" HeightRequest="110" WidthRequest="110" Padding="17"/>
+                                    <ImageButton Grid.Column="1" Source="star.png" BackgroundColor="White" Command="{Binding BindingContext.Button2Command, Source={x:Reference page}}" CommandParameter="{Binding .}" HeightRequest="110" WidthRequest="110" Padding="17"/>
+                                    <ImageButton Grid.Column="2" Source="connect.png" BackgroundColor="White" Command="{Binding BindingContext.Button3Command, Source={x:Reference page}}" CommandParameter="{Binding .}" HeightRequest="110" WidthRequest="110" Padding="17"/>
+                                    <ImageButton Grid.Column="3" Source="download.png" BackgroundColor="White" Command="{Binding BindingContext.Button4Command, Source={x:Reference page} ,Mode=TwoWay}" CommandParameter="{Binding .}" HeightRequest="110" WidthRequest="110" Padding="17"/>
+                                </Grid>
+                            </SwipeItemView>
+                        </SwipeItems>
+                    </SwipeView.RightItems>
+
+                    <Grid BackgroundColor="LightBlue" HorizontalOptions="FillAndExpand" HeightRequest="110" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Text="{Binding Name}" FontSize="16" FontAttributes="Bold" Margin="10,10,0,0"/>
+                        <Label Grid.Row="1" Text="{Binding SLNo}" FontSize="16" FontAttributes="Bold" Margin="10,0,0,0"/>
+                        </Grid>
+                </SwipeView>
+            </StackLayout>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <StackLayout>
+        <behaviors:Expander Margin="0,8,0,0" IsExpanded="True">
+            <behaviors:Expander.Header>
+                <Grid BackgroundColor="LightGray">
+                    <Label Text="Expander" TextColor="Black" FontSize="14" Margin="12,20,0,0" HeightRequest="40"/>
+                    <Image Source="ic_collapse.png" HorizontalOptions="End" VerticalOptions="Start" Margin="0,20,10,0" HeightRequest="20" WidthRequest="20">
+                        <Image.Triggers>
+                            <DataTrigger TargetType="Image" Binding="{Binding Source={RelativeSource AncestorType={x:Type behaviors:Expander}}, Path=IsExpanded}" Value="True">
+                                <Setter Property="Rotation" Value="90" />
+                            </DataTrigger>
+                        </Image.Triggers>
+                    </Image>
+                </Grid>
+            </behaviors:Expander.Header>
+            <behaviors:Expander.Content>
+                <CollectionView HorizontalOptions="FillAndExpand" ItemsSource="{Binding CollectionData,Mode=TwoWay}" ItemTemplate="{x:StaticResource SampleTemplate}" VerticalScrollBarVisibility="Never"/>
+            </behaviors:Expander.Content>
+        </behaviors:Expander>
+    </StackLayout>
+</ContentPage>
